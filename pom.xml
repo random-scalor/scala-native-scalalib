@@ -1,0 +1,109 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.carrotgarden.a</groupId>
+        <artifactId>carrot-a</artifactId>
+        <version>0-SNAPSHOT</version>
+        <relativePath>.mvn</relativePath>
+    </parent>
+
+    <groupId>com.carrotgarden.scanat</groupId>
+    <artifactId>scalalib</artifactId>
+    <version>0</version>
+    <packaging>pom</packaging>
+
+    <description>
+    </description>
+
+    <modules>
+        <module>pom-2.11.xml</module>
+        <!-- <module>2.12</module> -->
+        <!-- <module>2.13</module> -->
+    </modules>
+
+    <properties>
+
+        <!-- Must override in each cross-version module. -->
+        <version.scala.epoch>2.11</version.scala.epoch>
+        <version.scala.release>2.11.12</version.scala.release>
+
+        <!-- Scala compiler tool stack. -->
+        <version.scala.zinc>1.1.1</version.scala.zinc>
+        <version.scala.plugin.macro>2.1.0</version.scala.plugin.macro>
+
+        <!-- Scala.native tool stack. -->
+        <version.scanat.epoch>0.3</version.scanat.epoch>
+        <version.scanat.release>0.3.6</version.scanat.release>
+        <version.scanat.library>native${version.scanat.epoch}_${version.scala.epoch}</version.scanat.library>
+
+        <version.java>1.8</version.java>
+
+        <maven.compiler.source>${version.java}</maven.compiler.source>
+        <maven.compiler.target>${version.java}</maven.compiler.target>
+
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <bintray.subject>random-scalor</bintray.subject>
+        <bintray.repository>maven</bintray.repository>
+
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>org.scala-native</groupId>
+            <artifactId>scalalib_${version.scanat.library}</artifactId>
+            <version>${version.scanat.release}</version>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                        <configuration>
+                            <createDependencyReducedPom>true</createDependencyReducedPom>
+                            <promoteTransitiveDependencies>true</promoteTransitiveDependencies>
+                            <dependencyReducedPomLocation>${project.basedir}/target/pom.xml</dependencyReducedPomLocation>
+                            <artifactSet>
+                                <includes>
+                                    <include>org.scala-native:scalalib*</include>
+                                </includes>
+                            </artifactSet>
+                            <filters>
+                                <filter>
+                                    <artifact>org.scala-native:scalalib*</artifact>
+                                    <excludes>
+                                        <exclude>**/*.class</exclude>
+                                    </excludes>
+                                </filter>
+                            </filters>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>com.carrotgarden.maven</groupId>
+                <artifactId>flatten-maven-plugin</artifactId>
+                <configuration>
+                </configuration>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+</project>

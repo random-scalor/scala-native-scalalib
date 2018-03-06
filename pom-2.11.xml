@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.carrotgarden.scanat</groupId>
+        <artifactId>scalalib</artifactId>
+        <version>0</version>
+        <relativePath>./pom.xml</relativePath>
+    </parent>
+
+    <groupId>com.carrotgarden.scanat</groupId>
+    <artifactId>scalalib_${version.scanat.library}</artifactId>
+    <version>${version.scanat.release}</version>
+
+    <description>
+    </description>
+
+    <properties>
+
+        <version.scala.epoch>2.11</version.scala.epoch>
+        <version.scala.release>2.11.12</version.scala.release>
+
+    </properties>
+
+</project>
